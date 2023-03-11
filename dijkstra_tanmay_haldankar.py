@@ -183,14 +183,36 @@ def backtracking(closed_list, start, goal, map):
     cv2.imshow("Map", map)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
-    
-    
 
 def main():
     map_e = np.ones((HEIGHT, WIDTH, 3), dtype=np.uint8)
     map = Obstacle_space(map_e)
-    node_start = (50,125)
-    goal_node = [440, 125]
+    start_node_0 = input('Enter x value for starting node\n')
+    start_node_1 = input('Enter y value for starting node\n')
+    start_node_0 = int(start_node_0)
+    start_node_1 = int(start_node_1)
+    while (map[249 - int(start_node_1), int(start_node_0)][0] != 1):
+        print("Invalid start node please enter again")
+        start_node_0 = input('Enter x value for starting node\n')
+        start_node_0 = int(start_node_0)
+        start_node_1 = input('Enter y value for starting node\n')
+        start_node_1 = int(start_node_1)
+    
+    goal_node_0 = input('Enter x value for goal node\n')
+    goal_node_1 = input('Enter y value for goal node\n')
+    goal_node_0 = int(goal_node_0)
+    goal_node_1 = int(goal_node_1)
+    while (map[249 - int(goal_node_1), int(goal_node_0)][0] != 1):
+        print("Invalid goal node please enter again")
+        goal_node_0 = input('Enter x value for goal node\n')
+        goal_node_0 = int(goal_node_0)
+        goal_node_1 = input('Enter y value for goal node\n')
+        goal_node_1 = int(goal_node_1)
+
+
+
+    node_start =(start_node_0, start_node_1)
+    goal_node = [goal_node_0, goal_node_1]
     goal_flag = c_int64(0)
     c_idx = c_int64(0)
     
