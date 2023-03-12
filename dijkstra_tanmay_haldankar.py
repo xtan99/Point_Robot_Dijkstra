@@ -243,8 +243,8 @@ def main():
 
         Start(c_n, Q, c_idx, closed_list, map)
 
-    if bool3 == False:
-        print("No valid solution")
+        if bool3 == False:
+            print("No valid solution")
 
 
 if __name__ == '__main__':
