@@ -194,23 +194,35 @@ def main():
     start_node_1 = input('Enter y value for starting node\n')
     start_node_0 = int(start_node_0)
     start_node_1 = int(start_node_1)
-    while (map[249 - int(start_node_1), int(start_node_0)][0] != 1):
-        print("Invalid start node please enter again")
+    while ((start_node_0 > 600) or (start_node_1 > 250)):
+        print("Invalid start node out of bounds please enter again")
         start_node_0 = input('Enter x value for starting node\n')
         start_node_0 = int(start_node_0)
         start_node_1 = input('Enter y value for starting node\n')
         start_node_1 = int(start_node_1)
+        if (map[249 - int(start_node_1), int(start_node_0)][0] != 1): 
+            print("Invalid start node please enter again")
+            start_node_0 = input('Enter x value for starting node\n')
+            start_node_0 = int(start_node_0)
+            start_node_1 = input('Enter y value for starting node\n')
+            start_node_1 = int(start_node_1)
     
     goal_node_0 = input('Enter x value for goal node\n')
     goal_node_1 = input('Enter y value for goal node\n')
     goal_node_0 = int(goal_node_0)
     goal_node_1 = int(goal_node_1)
-    while (map[249 - int(goal_node_1), int(goal_node_0)][0] != 1):
-        print("Invalid goal node please enter again")
-        goal_node_0 = input('Enter x value for goal node\n')
+    while ((goal_node_0 > 600) or (goal_node_1 > 250)):
+        print("Invalid goal node out of bounds please enter again")
+        goal_node_0 = input('Enter x value for goaling node\n')
         goal_node_0 = int(goal_node_0)
-        goal_node_1 = input('Enter y value for goal node\n')
+        goal_node_1 = input('Enter y value for goaling node\n')
         goal_node_1 = int(goal_node_1)
+        if (map[249 - int(goal_node_1), int(goal_node_0)][0] != 1): 
+            print("Invalid goal node please enter again")
+            goal_node_0 = input('Enter x value for goal node\n')
+            goal_node_0 = int(goal_node_0)
+            goal_node_1 = input('Enter y value for goal node\n')
+            goal_node_1 = int(goal_node_1)
 
 
 
@@ -243,8 +255,8 @@ def main():
 
         Start(c_n, Q, c_idx, closed_list, map)
 
-        if bool3 == False:
-            print("No valid solution")
+    if bool3 == False:
+        print("No valid solution")
 
 
 if __name__ == '__main__':
