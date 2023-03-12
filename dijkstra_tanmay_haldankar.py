@@ -46,18 +46,16 @@ def Check(c_n1, c_n, Q, c_idx, closed_list, c):
     c_n1 = tuple(c_n1)
 
     if c_n1 not in closed_list:
-        c_n1 = [c_n[0], c_n[1], c_n1, c_n[3]]
+        c_n1 = [c_n[0], c_n[1], c_n1, c_n[2]]
         for i in Q:   
             if i[2] == c_n1[2]:
                 bool2 = True
                 c_n1[0] = c_n1[0] + c
                 if i[0] > c_n1[0]:
-                    c_n1[3] = c_n1[1]
                     i[0] = c_n1[0]
                     i[3] = c_n1[3]
         if bool2 == False:
-            c_n1[0] = c_n1[0] + c #Changed here
-            c_n1[3] = c_n[2]
+            c_n1[0] = c_n1[0] + c 
             c_idx.value += 1
             c_n1[1] = c_idx.value
             hq.heappush(Q, c_n1)
@@ -128,7 +126,6 @@ def Start(c_n, Q, c_idx, closed_list, map):
     if c_n1 != None:
         c = 1
         Check(c_n1, c_n, Q, c_idx, closed_list, c)
-
     
     c_n2 = Movedown(c_n[2], map)
     if c_n2 != None:
@@ -166,25 +163,31 @@ def Start(c_n, Q, c_idx, closed_list, map):
         Check(c_n8, c_n, Q, c_idx, closed_list, c)
 
 def backtracking(closed_list, start, goal, map):
+    result = cv2.VideoWriter('Dijkstra.avi', cv2.VideoWriter_fourcc(*'MJPG'),1000,(600,250))
     path = []
     path.append(goal)
     for c_n in closed_list:
         map[249 - c_n[1], c_n[0]] = (255, 255, 255)
         cv2.waitKey(1)
         cv2.imshow("Map", map)
+        result.write(map)
+    c_n = tuple(goal)
 
     while(c_n != start):
-            c_n == goal
-            c_n = closed_list[c_n]
-            path.append(c_n)
+        c_n = closed_list[c_n]
+        path.append(c_n)
     path.reverse()
     for p in range (len(path)):
         map[249 - path[p][1], path[p][0]] = [0, 0, 255]
+    
     cv2.imshow("Map", map)
+    result.write(map)
+    result.release()
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
 def main():
+    bool3 = False
     map_e = np.ones((HEIGHT, WIDTH, 3), dtype=np.uint8)
     map = Obstacle_space(map_e)
     start_node_0 = input('Enter x value for starting node\n')
@@ -212,12 +215,12 @@ def main():
 
 
     node_start =(start_node_0, start_node_1)
-    goal_node = [goal_node_0, goal_node_1]
-    goal_flag = c_int64(0)
+    goal_node = (goal_node_0, goal_node_1)
+    #goal_flag = c_int64(0)
     c_idx = c_int64(0)
     
 
-    n_s = [0.0, 0, node_start, 0]
+    n_s = [0.0, 0, node_start, node_start]
     Q = []
     closed_list = {}
     hq.heappush(Q, n_s)
@@ -234,10 +237,14 @@ def main():
             print("Exited while, goal found")
             print("Time to compute in seconds is ", round(time.time() - starting_time,2))
             backtracking(closed_list, node_start, goal_node, map)
-            goal_flag.value+=1
+            bool3 = True
+            #goal_flag.value+=1
             break
 
         Start(c_n, Q, c_idx, closed_list, map)
+
+    if bool3 == False:
+        print("No valid solution")
 
 
 if __name__ == '__main__':
